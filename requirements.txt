@@ -1,0 +1,16 @@
+Pandas
+numpy
+torch
+torchvision
+torchaudio
+scikit-learn
+transformers
+python-dotenv
+tqdm
+requests
+beautifulsoup4
+ipykernel
+biopython
+streamlit
+nltk
+setuptools

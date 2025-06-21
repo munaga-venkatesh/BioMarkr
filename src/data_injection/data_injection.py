@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import sqlite3
+from tqdm import tqdm
 from typing import List
 from Bio import Entrez
 from dotenv import load_dotenv
@@ -114,7 +115,7 @@ class DataInjection:
             ids = self._fetch_abstract_ids(disease, max_articles)
             logging.info("Fetching and storing abstracts...")
 
-            for pmid in ids:
+            for pmid in tqdm(ids):
                 abstract = self._fetch_abstract_by_id(pmid)
                 if abstract.strip():
                     cleaned_abstract = re.sub(r'\s+', ' ', abstract.replace('\n', ' ')).strip()
@@ -147,7 +148,7 @@ class DataInjection:
             abstracts = []
 
             logging.info("Fetching abstracts without DB storage...")
-            for pmid in ids:
+            for pmid in tqdm(ids):
                 abstract = self._fetch_abstract_by_id(pmid)
                 if abstract.strip():
                     cleaned_abstract = re.sub(r'\s+', ' ', abstract.replace('\n', ' ')).strip()
@@ -160,4 +161,4 @@ class DataInjection:
 
 if __name__ == "__main__":
     data_injection = DataInjection()
-    data_injection.load_abstracts_to_db(disease="cancer", max_articles=5)
+    data_injection.load_abstracts_to_db(disease="cancer", max_articles=100_000)
